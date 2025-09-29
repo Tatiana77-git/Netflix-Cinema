@@ -1,0 +1,15 @@
+.card {
+  min-width: 150px;
+  color: white;
+  text-align: center;
+}
+
+.card__img {
+  width: 150px;
+  border-radius: 6px;
+}
+
+.card__title {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}

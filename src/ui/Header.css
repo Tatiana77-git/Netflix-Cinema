@@ -1,0 +1,19 @@
+.header {
+  background-color: #141414; 
+  padding: 1rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav_link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav_link:hover {
+  color: #e50914; 
+}
