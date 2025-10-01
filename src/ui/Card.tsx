@@ -8,8 +8,8 @@ type Props = {
 export default function Card({ title, poster }: Props) {
   return (
     <div className="card">
-      <img src={poster} alt={title} className="card__img" />
-      <h3 className="card__title">{title}</h3>
+      <img src={poster} alt={title} className="card_img" />
+      <h3 className="card_title">{title}</h3>
     </div>
   );
 }
