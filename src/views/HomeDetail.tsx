@@ -4,7 +4,7 @@
   import { img } from "../services/Fetch";
   import "./Details.css"
 
-  export default function MovieDetail() {
+  export default function HomeDetail() {
     const { id } = useParams<{ id: string }>();
     const [movie, setMovie] = useState<any | null>(null);
 
@@ -17,7 +17,7 @@
           const data = await resp.json();
           setMovie(data);
         } catch (err) {
-          console.error("Erreur MovieDetail:", err);
+          console.error("Erreur HomeDetail:", err);
         }
       })();
     }, [id]);
@@ -34,5 +34,4 @@
       </div>
     );
   }
-
 

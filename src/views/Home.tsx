@@ -1,32 +1,10 @@
-// import { useEffect, useState } from "react";
-// import Banner from "../ui/Banner";
-// import Carousel from "../ui/Carousel";
-// import { getPopularMovies, getTopRatedMovies, getUpcomingMovies } from "../services/Fetch";
 
-// export default function Home() {
-//   const [popular, setPopular] = useState<any[]>([]);
-//   const [topRated, setTopRated] = useState<any[]>([]);
-//   const [upcoming, setUpcoming] = useState<any[]>([]);
-
-//   useEffect(() => {
-//     getPopularMovies().then(setPopular);
-//     getTopRatedMovies().then(setTopRated);
-//     getUpcomingMovies().then(setUpcoming);
-//   }, []);
-
-//   return (
-//     <main>
-//       <Banner />
-//       <Carousel title="Films populaires" movies={popular} />
-//       <Carousel title="Mieux notés" movies={topRated} />
-//       <Carousel title="À venir" movies={upcoming} />
-//     </main>
-//   );
-// }
 import { useEffect, useState } from "react";
 import Banner from "../ui/Banner";
 import Carousel from "../ui/Carousel";
 import { getPopularMovies, getTopRatedMovies, getUpcomingMovies } from "../services/Fetch";
+
+
 
 export default function Home() {
   const [popular, setPopular] = useState<any[]>([]);
@@ -43,19 +21,21 @@ export default function Home() {
       setTopRated(t);
       setUpcoming(u);
 
-      
-      if (p.length > 0) {
-        setSelectedMovie(p[Math.floor(Math.random() * p.length)]);
+      if (p.length >0) {
+      setSelectedMovie(p[Math.floor(Math.random() * p.length)]);
       }
     })();
   }, []);
 
+  
+
+
   return (
     <main>
       <Banner movie={selectedMovie} />
-      <Carousel title="Films populaires" movies={popular} onSelect={setSelectedMovie} />
+      <Carousel title="Films populaires" movies={popular}   onSelect={setSelectedMovie} />
       <Carousel title="Mieux notés" movies={topRated} onSelect={setSelectedMovie} />
-      <Carousel title="À venir" movies={upcoming} onSelect={setSelectedMovie} />
+      <Carousel title="À venir" movies={upcoming}  onSelect={setSelectedMovie} />
     </main>
   );
 }

@@ -1,69 +1,79 @@
-
-
 const API_BASE = import.meta.env.VITE_API_BASE as string;
 const API_KEY  = import.meta.env.VITE_API_KEY as string;
 const IMG_BASE = import.meta.env.VITE_IMG_BASE as string;
 
-/**
- * Универсальный GET с try/catch.
- * НИКАКОГО body и JSON.stringify здесь не нужно — это GET-запрос.
- */
-async function request<T>(path: string, params: Record<string, string | number> = {}): Promise<T> {
+
+async function request(path: string, params: Record<string, string | number> = {}) {
   try {
     const url = new URL(API_BASE + path);
     url.search = new URLSearchParams({
       api_key: API_KEY,
       language: "fr-FR",
-      ...params as Record<string, string>
+      ...params,
     }).toString();
 
-    const res = await fetch(url.toString(), { method: "GET" });
-    if (!res.ok) {
-      const text = await res.text(); // читаем текст ошибки для диагностики
-      throw new Error(`HTTP ${res.status} – ${text}`);
-    }
-    return (await res.json()) as T;
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error("Erreur HTTP " + res.status);
+    return await res.json();
   } catch (err) {
-    console.error("API request error:", err);
-    throw err; // пробрасываем наверх, чтобы страница могла показать сообщение
+    console.error("Erreur fetch:", err);
+    return null;
   }
 }
 
-// 🎬 Accueil — 3 ленты
+
+
+
+
+// Accueil
 export async function getPopularMovies() {
-  const data = await request<{ results: any[] }>("/movie/popular");
-  return data.results; // массив фильмов
+  const data = await request("/movie/popular");
+  return data ? data.results : [];
 }
 
 export async function getTopRatedMovies() {
-  const data = await request<{ results: any[] }>("/movie/top_rated");
-  return data.results;
+  const data = await request("/movie/top_rated");
+  return data ? data.results : [];
 }
 
 export async function getUpcomingMovies() {
-  const data = await request<{ results: any[] }>("/movie/upcoming");
-  return data.results;
+  const data = await request("/movie/upcoming");
+  return data ? data.results : [];
 }
 
-// 📷 helper для картинок (poster/backdrop)
+// Movies 
+export async function getMoviesByGenre(genreId: number) {
+  const data = await request("/discover/movie", { with_genres: genreId });
+  return data ? data.results : [];
+}
+
+
+//  SERIES 
+
+export async function getPopularSeries() {
+  const data = await request("/tv/popular");
+  return data ? data.results : [];
+}
+
+export async function getTopRatedSeries() {
+  const data = await request("/tv/top_rated");
+  return data ? data.results : [];
+}
+
+export async function getSeriesByGenre(genreId: number) {
+  const data = await request("/discover/tv", { with_genres: genreId });
+  return data ? data.results : [];
+}
+
+
+
 export function img(path: string | null, size = "w500") {
   return path ? `${IMG_BASE}/${size}${path}` : "";
 }
 
 
-
-
-/**
- * 🔎 Важно:
- * JSON.stringify и body НУЖНЫ только для POST/PUT/PATCH.
- * Для нашего brief на главной — все запросы GET, тело не отправляем.
- * Пример POST (НЕ нужен сейчас, просто для понимания):
- *
- * async function examplePost() {
- *   const res = await fetch("https://example.com/api", {
- *     method: "POST",
- *     headers: { "Content-Type": "application/json" },
- *     body: JSON.stringify({ name: "hello" })
- *   });
- * }
- */
+export  async function getSeriesById (id :string) {
+  const data = await request  (`/tv/${id}`);
+  return data; 
+}
+  

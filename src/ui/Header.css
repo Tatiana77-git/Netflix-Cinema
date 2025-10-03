@@ -1,6 +1,7 @@
 .header {
-  background-color: #141414; 
-  padding: 1rem;
+  background-color: #141414;
+  padding: 1rem 2rem;
+  font-family: "Roboto", Arial, sans-serif; /* современный шрифт */
 }
 
 .nav {
@@ -11,9 +12,18 @@
 .nav_link {
   color: #fff;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.1rem;           
+  padding: 0.6rem 1.5rem;      
+  border-radius: 25px;         
+  background-color: transparent;
+  border: 1px solid #e50914;   
+  transition: all 0.3s ease;
 }
 
 .nav_link:hover {
-  color: #e50914; 
+  color: #fff;
+  background-color: #e50914;   
+  transform: scale(1.07);      
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
